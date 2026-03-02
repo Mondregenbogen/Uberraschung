@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <style>
+    :root{
+      --bg1:#fbf4e9;      /* Creme */
+      --bg2:#efe2cf;      /* Beige */
+      --card:#fffaf1;     /* sehr helles Creme */
+      --text:#2b2018;     /* dunkles Braun */
+      --muted:#6b5647;    /* warmes Taupe */
+      --accent:#b07a4a;   /* Karamell */
+      --accent2:#7a4e2f;  /* Schoko */
+      --good:#2f7d4a;
+      --bad:#b54747;
+      --warn:#b9832a;
+    }
+
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+      color:var(--text);
+      background:
+        radial-gradient(1100px 650px at 20% 10%, rgba(176,122,74,.22) 0%, transparent 60%),
+        radial-gradient(900px 600px at 80% 20%, rgba(122,78,47,.18) 0%, transparent 60%),
+        linear-gradient(160deg, var(--bg1), var(--bg2));
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:20px;
+    }
+
+    .wrap{width:min(980px, 100%);}
+
+    .card{
+      background: rgba(255,255,255,.75);
+      border:1px solid rgba(122,78,47,.18);
+      border-radius:20px;
+      padding:18px;
+      box-shadow: 0 14px 50px rgba(43,32,24,.12);
+      backdrop-filter: blur(10px);
+    }
+
+    .title{
+      font-size: clamp(22px, 3.2vw, 34px);
+      line-height:1.15;
+      margin:0 0 10px;
+      letter-spacing:.2px;
+    }
+
+    .subtle{
+      color:var(--muted);
+      font-size:14px;
+      line-height:1.55;
+      margin:0;
+      white-space:pre-line;
+    }
+
+    .rulebox{
+      border:1px solid rgba(122,78,47,.18);
+      background: rgba(255,255,255,.55);
+      border-radius:16px;
+      padding:14px;
+      margin-top:10px;
+      white-space:pre-line;
+    }
+
+    .row{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top:14px;
+    }
+
+    button{
+      appearance:none;
+      border:1px solid rgba(122,78,47,.22);
+      background: linear-gradient(135deg, rgba(176,122,74,.18), rgba(122,78,47,.10));
+      color:var(--text);
+      font-weight:800;
+      padding:10px 14px;
+      border-radius:14px;
+      cursor:pointer;
+    }
+
+    button:hover{
+      filter: brightness(1.02);
+    }
+
+    .ghost{
+      background: rgba(255,255,255,.55);
+    }
+
+    .stepTop{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:12px;
+      margin-bottom:8px;
+    }
+
+    .adim{
+      font-weight:900;
+      letter-spacing:.3px;
+      font-size:18px;
+      margin:0;
+    }
+
+    .progress{
+      color:var(--muted);
+      font-size:12px;
+      margin-top:2px;
+      white-space:nowrap;
+    }
+
+    .qbox{
+      margin-top:12px;
+      border:1px solid rgba(122,78,47,.18);
+      background: rgba(255,255,255,.55);
+      border-radius:16px;
+      padding:14px;
+    }
+
+    .label{
+      font-weight:900;
+      margin:0 0 6px;
+      font-size:13px;
+      letter-spacing:.2px;
+    }
+
+    .question{
+      margin:0;
+      color:var(--muted);
+      font-size:14px;
+      line-height:1.55;
+      white-space:pre-line;
+    }
+
+    .inputRow{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top:10px;
+      align-items:center;
+    }
+
+    input[type="text"]{
+      flex:1 1 260px;
+      padding:11px 12px;
+      border-radius:14px;
+      border:1px solid rgba(122,78,47,.22);
+      background: rgba(255,255,255,.70);
+      color:var(--text);
+      outline:none;
+      font-size:14px;
+    }
+
+    .msg{
+      margin-top:10px;
+      padding:10px 12px;
+      border-radius:14px;
+      border:1px solid rgba(122,78,47,.18);
+      display:none;
+      font-size:14px;
+      white-space:pre-line;
+      background: rgba(255,255,255,.68);
+      color:var(--text);
+    }
+
+    .msg.ok{display:block; border-color: rgba(47,125,74,.22);}
+    .msg.bad{display:block; border-color: rgba(181,71,71,.22);}
+
+    /* Adım 3 layout: input left, cards right */
+    .shukrWrap{
+      display:flex;
+      gap:12px;
+      align-items:flex-start;
+      flex-wrap:wrap;
+      margin-top:10px;
+    }
+    .shukrLeft{
+      flex: 1 1 320px;
+      min-width: 280px;
+    }
+    .shukrRight{
+      flex: 1 1 320px;
+      min-width: 280px;
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      justify-content:flex-start;
+      align-content:flex-start;
+    }
+    .miniCard{
+      width: min(240px, 100%);
+      border:1px solid rgba(122,78,47,.18);
+      background: rgba(255,255,255,.68);
+      border-radius:16px;
+      padding:12px;
+    }
+    .miniCard .t{
+      margin:0;
+      font-weight:800;
+      font-size:14px;
+      line-height:1.4;
+    }
+    .miniCard .s{
+      margin:8px 0 0;
+      color:var(--muted);
+      font-size:12px;
+    }
+
+    /* Floating toast for Adım 5 Hayır click */
+    .toast{
+      position:fixed;
+      left:50%;
+      top:18px;
+      transform:translateX(-50%);
+      background: rgba(255,255,255,.85);
+      border:1px solid rgba(122,78,47,.22);
+      box-shadow: 0 10px 30px rgba(43,32,24,.14);
+      border-radius:16px;
+      padding:10px 12px;
+      color:var(--text);
+      font-weight:700;
+      font-size:14px;
+      white-space:pre-line;
+      display:none;
+      z-index:9999;
+      max-width: min(520px, calc(100% - 40px));
+    }
+
+    /* Runaway button */
+    .runaway{
+      position:fixed;
+      z-index:9998;
+      left:50%;
+      top:60%;
+      transform: translate(-50%, -50%) scale(1);
+      transform-origin:center;
+    }
+
+    .finalText{
+      white-space:pre-line;
+      color:var(--text);
+      font-size:14px;
+      line-height:1.65;
+      margin:0;
+    }
+
+    .signature{
+      margin-top:10px;
+      color:var(--muted);
+      font-size:13px;
+      font-weight:800;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card" id="app"></div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+    // =========================
+    // Personalize here
+    // =========================
+    const FRIEND_NAME = "Ayşe";   // Optional: name shown in finale title (kannst du lassen)
+    const YOUR_NAME   = "Aysenur";
+
+    const FINAL_MESSAGE = `Ayşe,
+
+iyi ki varsın.
+İyi ki hem kardeşim hem de dostumsun.
+
+Senin için dua ederken çoğu zaman Hz. Ali’nin duasıyla dua ediyorum:
+“Rabbim gönlünde olanı hakkında hayırlı eylesin, hakkında hayırlı olanı da gönlüne razı eylesin.”
+
+Senin için bütün güzellikleri, bütün mutlulukları isterdim.
+Ama biliyoruz ki bu dünya bir imtihan yeri.
+Rabbim burada imtihanını da güzel eylesin;
+ahirette ise yaptıklarının en güzel meyvelerini tatmayı nasip etsin.
+
+Hayatını hayırla doldursun,
+ve sana O’nun rızasını kazanabileceğin bir ömür versin.
+
+Seni seven kardeşin,
+Aysenur
+
+
+Kalbin hep ferah olsun.`;
+
+    // =========================
+    // Helpers
+    // =========================
+    const app = document.getElementById("app");
+    const toast = document.getElementById("toast");
+
+    function showToast(text){
+      toast.textContent = text;
+      toast.style.display = "block";
+      clearTimeout(showToast._t);
+      showToast._t = setTimeout(() => toast.style.display = "none", 1600);
+    }
+
+    function norm(s){
+      return (s || "")
+        .trim()
+        .toLowerCase()
+        .replaceAll("ı","i")
+        .replaceAll("İ","i")
+        .replaceAll("â","a")
+        .replaceAll("ş","s")
+        .replaceAll("ğ","g")
+        .replaceAll("ü","u")
+        .replaceAll("ö","o")
+        .replaceAll("ç","c");
+    }
+
+    function escapeHtml(str){
+      return (str || "").replace(/[&<>"']/g, (m) => ({
+        "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+      }[m]));
+    }
+
+    // =========================
+    // State machine
+    // =========================
+    let screen = "rules"; // rules, step1, step2, step3, step4, step5, final
+
+    // Adım 3
+    let shukrEntries = [];
+
+    // Adım 5
+    let fleeCount = 0;
+    let devScale = 1;
+
+    // =========================
+    // Render functions
+    // =========================
+    function render(){
+      if(screen === "rules") return renderRules();
+      if(screen === "step1") return renderStep1();
+      if(screen === "step2") return renderStep2();
+      if(screen === "step3") return renderStep3();
+      if(screen === "step4") return renderStep4();
+      if(screen === "step5") return renderStep5();
+      if(screen === "final") return renderFinal();
+    }
+
+    function topBar(adim, progress){
+      return `
+        <div class="stepTop">
+          <div>
+            <p class="adim">${adim}</p>
+          </div>
+          <div class="progress">${progress}</div>
+        </div>
+      `;
+    }
+
+    // -------------------------
+    // Rules screen
+    // -------------------------
+    function renderRules(){
+      app.innerHTML = `
+        <h1 class="title">Kurallar / Regeln</h1>
+        <div class="rulebox subtle">Jede richtige Antwort öffnet das nächste Level. Du kannst Hint benutzen – aber dann meckere ich ein bisschen🤨
+
+Not: Alles ist liebevoll gemeint. Falls du bei etwas kurz hängen bleibst: nefes al, gül, devam et😊</div>
+
+        <div class="row">
+          <button id="ok1">Tamam</button>
+          <button id="ok2">Tamam</button>
+        </div>
+      `;
+      document.getElementById("ok1").onclick = () => { screen="step1"; render(); };
+      document.getElementById("ok2").onclick = () => { screen="step1"; render(); };
+    }
+
+    // -------------------------
+    // Step 1
+    // -------------------------
+    function renderStep1(){
+  const intro = `Aynı mahallede büyüdük.
+Aynı sokaktan yürüdük.
+Farklı kapılardan girdik… ama sabahları aynı yola çıktık.
+Dostluk bazen aynı binada değil, aynı istikamette başlar.`;
+
+  app.innerHTML = `
+    ${topBar("Adım 1", "1/5")}
+    <p class="subtle">${intro}</p>
+
+    <div class="qbox">
+      <p class="label">Soru / Frage</p>
+      <p class="question">Biz her sabah nereye birlikte yürürdük?</p>
+
+      <div class="inputRow">
+        <input id="a1" type="text" placeholder="Cevabını yaz..." autocomplete="off"/>
+        <button id="b1">Kontrol</button>
+        <button id="h1" class="ghost">Hint 💡</button>
+      </div>
+
+      <div class="msg" id="hint1">Mars’a değil 😌</div>
+      <div class="msg ok" id="m1ok">Ve yol, dostluğa dönüştü.</div>
+      <div class="msg bad" id="m1bad">Hmm… olmadı. Bir daha dene 😄</div>
+    </div>
+  `;
+
+  const a1 = document.getElementById("a1");
+  const b1 = document.getElementById("b1");
+  const h1 = document.getElementById("h1");
+  const hint1 = document.getElementById("hint1");
+  const ok = document.getElementById("m1ok");
+  const bad = document.getElementById("m1bad");
+
+  const allowed = ["okula","lise","ortaokul","okullar","okul"].map(norm);
+
+  function check(){
+    ok.style.display = "none";
+    bad.style.display = "none";
+    const v = norm(a1.value);
+    if(allowed.includes(v)){
+      ok.style.display = "block";
+      setTimeout(() => { screen="step2"; render(); }, 850);
+    } else {
+      bad.style.display = "block";
+    }
+  }
+
+  b1.onclick = check;
+  h1.onclick = () => hint1.style.display = "block";
+  a1.addEventListener("keydown", (e)=>{ if(e.key==="Enter") check(); });
+  a1.focus();
+}
+
+    // -------------------------
+    // Step 2
+    // -------------------------
+    function renderStep2(){
+  const intro = `O zamanlar henüz çok küçüktük.
+Tatillerde, hafta sonlarında bir araya gelir, aynı satırların başına otururduk.
+Bazen ciddiydik, bazen gülerdik.
+Risale-i Nur içimizde küçük bir merak uyandırıyordu.`;
+
+  app.innerHTML = `
+    ${topBar("Adım 2", "2/5")}
+    <p class="subtle">${intro}</p>
+
+    <div class="qbox">
+      <p class="label">Soru / Frage</p>
+      <p class="question">O yaşta bizi derslere çeken duygu neydi?</p>
+
+      <div class="inputRow">
+        <input id="a2" type="text" placeholder="İçinden geleni yaz..." autocomplete="off"/>
+        <button id="b2">Devam</button>
+        <button id="h2" class="ghost">Hint 💡</button>
+      </div>
+
+      <div class="msg" id="hint2">Cevap Google’da yok 😌</div>
+      <div class="msg ok" id="m2ok">Belki meraktı.
+Belki huzurdu.
+Belki sadece birlikte olmaktı.
+Ama o günler, dostluğumuzu derinleştirdi.</div>
+    </div>
+  `;
+
+  const a2 = document.getElementById("a2");
+  const b2 = document.getElementById("b2");
+  const h2 = document.getElementById("h2");
+  const hint2 = document.getElementById("hint2");
+  const ok = document.getElementById("m2ok");
+
+  function go(){
+    ok.style.display = "block";
+    setTimeout(() => { screen="step3"; render(); }, 1100);
+  }
+
+  b2.onclick = go;
+  h2.onclick = () => hint2.style.display = "block";
+  a2.addEventListener("keydown", (e)=>{ if(e.key==="Enter") go(); });
+  a2.focus();
+}
+
+    // -------------------------
+    // Step 3 (Şükür x3)
+    // -------------------------
+    function renderStep3(){
+      const intro = `Hayat hep aynı çizgide ilerlemedi.
+Bazen dersten uzaklaştım.
+Ama sen hep yanımda kaldın.
+Dinledin, cesaret verdin, tekrar dönmem için elimi tuttun.
+Bunun için çok şükür.`;
+
+      app.innerHTML = `
+        ${topBar("Adım 3", "3/5")}
+        <p class="subtle">${intro}</p>
+
+        <div class="qbox">
+          <p class="label">Mini görev</p>
+          <p class="question">Şimdi 3 defa şükür yazalım.
+Aklına gelen ilk şeyi yaz — büyük/küçük fark etmez.</p>
+
+          <div class="shukrWrap">
+            <div class="shukrLeft">
+              <div class="inputRow">
+                <input id="a3" type="text" placeholder="Şükür ettiğin bir şeyi yaz..." autocomplete="off"/>
+                <button id="b3">Ekle</button>
+              </div>
+              <div class="msg ok" id="m3ok">Güzel 🤎 Devam et…</div>
+            </div>
+
+            <div class="shukrRight" id="cards"></div>
+          </div>
+        </div>
+      `;
+
+      const a3 = document.getElementById("a3");
+      const b3 = document.getElementById("b3");
+      const m3 = document.getElementById("m3ok");
+      const cards = document.getElementById("cards");
+
+      function repaintCards(){
+        cards.innerHTML = shukrEntries.map((t, i) => `
+          <div class="miniCard">
+            <p class="t">${escapeHtml(t)}</p>
+            <p class="s">Elhamdülillah 🤎</p>
+          </div>
+        `).join("");
+      }
+
+      function addEntry(){
+        const raw = (a3.value || "").trim();
+        if(!raw) return; // ignore empty
+        shukrEntries.push(raw);
+        a3.value = "";
+        repaintCards();
+
+        m3.style.display = "block";
+        if(shukrEntries.length === 1) m3.textContent = "Bir şükür daha…";
+        if(shukrEntries.length === 2) m3.textContent = "Son bir tane daha…";
+        if(shukrEntries.length >= 3){
+          m3.textContent = "Şükür paylaştıkça çoğalır.";
+          // auto next
+          setTimeout(() => { screen="step4"; render(); }, 900);
+        }
+      }
+
+      b3.onclick = addEntry;
+      a3.addEventListener("keydown", (e)=>{ if(e.key==="Enter") addEntry(); });
+
+      repaintCards();
+      a3.focus();
+    }
+
+    // -------------------------
+    // Step 4 (İhlas riddle)
+    // -------------------------
+    function renderStep4(){
+  const intro = `Şimdi biraz zorlayacağım.
+Zekânı da kullanman gerekecek 😌
+Bakalım o satırlar hâlâ aklında mı…`;
+
+  app.innerHTML = `
+    ${topBar("Adım 4", "4/5")}
+    <p class="subtle">${intro}</p>
+
+    <div class="qbox">
+      <p class="label">Rätsel</p>
+      <p class="question">“Ben” küçülür,
+“Biz” büyür.
+Gösterişi sevmez.
+Sessizdir ama güçlüdür.
+
+Nedir?</p>
+
+      <div class="inputRow">
+        <input id="a4" type="text" placeholder="Cevabın..." autocomplete="off"/>
+        <button id="b4">Kontrol</button>
+        <button id="h4" class="ghost">Hint 💡</button>
+      </div>
+
+      <div class="msg" id="hint4">Ego değil.</div>
+      <div class="msg ok" id="m4ok">Tamam, hâlâ hatırlıyorsun 😄
+Fena değilsin.</div>
+      <div class="msg bad" id="m4bad">Hmm… bir daha dene 😄</div>
+    </div>
+  `;
+
+  const a4 = document.getElementById("a4");
+  const b4 = document.getElementById("b4");
+  const h4 = document.getElementById("h4");
+  const hint4 = document.getElementById("hint4");
+  const ok = document.getElementById("m4ok");
+  const bad = document.getElementById("m4bad");
+
+  const answers = ["ihlas","ihlâs"].map(norm);
+
+  function check(){
+    ok.style.display = "none";
+    bad.style.display = "none";
+    const v = norm(a4.value);
+    if(answers.includes(v)){
+      ok.style.display = "block";
+      setTimeout(() => { screen="step5"; render(); }, 950);
+    } else {
+      bad.style.display = "block";
+    }
+  }
+
+  b4.onclick = check;
+  h4.onclick = () => hint4.style.display = "block";
+  a4.addEventListener("keydown", (e)=>{ if(e.key==="Enter") check(); });
+  a4.focus();
+}
+
+    // -------------------------
+    // Step 5 (runaway button)
+    // -------------------------
+    function renderStep5(){
+      const intro = `Son bir test daha var.
+Ama bu tamamen ciddiyetsiz 😌
+
+Gerçekten devam etmek istiyor musun?`;
+
+      app.innerHTML = `
+        ${topBar("Adım 5", "5/5")}
+        <p class="subtle">${intro}</p>
+
+        <div class="qbox">
+          <p class="label">Seçim</p>
+          <p class="question">İpucu: “Devam” yakalanmayı pek sevmiyor 😄</p>
+
+          <div class="row" style="margin-top:10px;">
+            <button class="ghost" id="hayir">❌ Hayır, yeter artık</button>
+            <button id="devamAnchor" style="display:none;"></button>
+          </div>
+        </div>
+      `;
+
+      // create runaway button as fixed element
+      let existing = document.getElementById("runawayBtn");
+      if(existing) existing.remove();
+
+      const btnRun = document.createElement("button");
+      btnRun.id = "runawayBtn";
+      btnRun.className = "runaway";
+      btnRun.textContent = "✅ Devam edelim";
+      document.body.appendChild(btnRun);
+
+      const hayir = document.getElementById("hayir");
+
+      // reset counters when entering step5
+      fleeCount = 0;
+      devScale = 1;
+
+      function placeRunawayRandom(){
+        const pad = 16;
+        const rect = btnRun.getBoundingClientRect();
+        const vw = window.innerWidth;
+        const vh = window.innerHeight;
+
+        const maxX = Math.max(pad, vw - rect.width - pad);
+        const maxY = Math.max(pad, vh - rect.height - pad);
+
+        const x = Math.floor(pad + Math.random() * (maxX - pad));
+        const y = Math.floor(pad + Math.random() * (maxY - pad));
+
+        btnRun.style.left = x + "px";
+        btnRun.style.top = y + "px";
+        btnRun.style.transform = `translate(0,0) scale(${devScale})`;
+      }
+
+      function flee(){
+        if(fleeCount >= 5) return;
+        fleeCount++;
+        devScale = Math.min(1.0 + fleeCount * 0.18, 2.1);
+        placeRunawayRandom();
+
+        if(fleeCount >= 5){
+          // After 5 rounds: remove Hayır, freeze Devam in center-ish and allow click to proceed
+          hayir.style.display = "none";
+          btnRun.style.left = "50%";
+          btnRun.style.top = "65%";
+          btnRun.style.transform = `translate(-50%, -50%) scale(${Math.min(devScale, 2.0)})`;
+          btnRun.style.cursor = "pointer";
+        }
+      }
+
+      // Run away on hover (pointerenter triggers once per entry)
+      btnRun.addEventListener("pointerenter", () => {
+        if(fleeCount < 5) flee();
+      });
+
+      // Mobile: also run on touchstart so it's still funny
+      btnRun.addEventListener("touchstart", (e) => {
+        if(fleeCount < 5){
+          e.preventDefault();
+          flee();
+        }
+      }, {passive:false});
+
+      // Clicking Hayır shows message (no navigation)
+      hayir.onclick = () => {
+        showToast("Yanlış kapı 😌\nLütfen biraz daha çabala.");
+      };
+
+      // Clicking Devam: only works AFTER 5 flees
+      btnRun.onclick = () => {
+        if(fleeCount < 5){
+          // optional tiny tease
+          showToast("Yakalayamadın 😄");
+          flee();
+          return;
+        }
+        // clean up runaway button then go final
+        btnRun.remove();
+        screen = "final";
+        render();
+      };
+
+      // initial placement: center-ish
+      btnRun.style.left = "50%";
+      btnRun.style.top = "65%";
+      btnRun.style.transform = "translate(-50%, -50%) scale(1)";
+    }
+
+    // -------------------------
+    // Final
+    // -------------------------
+    function renderFinal(){
+      // ensure runaway removed if still exists
+      const r = document.getElementById("runawayBtn");
+      if(r) r.remove();
+
+      app.innerHTML = `
+        <h1 class="title">💌</h1>
+        <div class="qbox">
+          <p class="finalText">${escapeHtml(FINAL_MESSAGE)}</p>
+          <div class="signature">— ${escapeHtml(YOUR_NAME)}</div>
+        </div>
+      `;
+    }
+
+    // start
+    render();
+  </script>
+</body>
+</html>
