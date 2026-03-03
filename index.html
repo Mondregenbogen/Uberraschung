@@ -38,7 +38,13 @@
 .nextWrap{
   display:flex;
   justify-content:flex-end;
-  margin-top:14px;
+  margin-top:18px;
+}
+
+.nextWrap button{
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  color: white;
+  border: none;
 }
 
     .card{
@@ -413,8 +419,9 @@ Dostluk bazen aynı binada değil, aynı istikamette başlar.`;
       <div class="msg" id="hint1">Mars’a değil 😌</div>
       <div class="msg ok" id="m1ok">Ve yol, dostluğa dönüştü.</div>
       <div class="msg bad" id="m1bad">Hmm… olmadı. Bir daha dene 😄</div>
-<button id="next1" style="display:none; margin-top:10px;">Devam</button>
-    </div>
+<div class="nextWrap">
+  <button id="next1" style="display:none;">Devam</button>
+</div>
   `;
 
   const a1 = document.getElementById("a1");
@@ -465,7 +472,7 @@ Risale-i Nur içimizde küçük bir merak uyandırıyordu.`;
 
       <div class="inputRow">
         <input id="a2" type="text" placeholder="İçinden geleni yaz..." autocomplete="off"/>
-        <button id="b2">Devam</button>
+        <button id="b2">Kontrol</button>
         <button id="h2" class="ghost">Hint 💡</button>
       </div>
 
@@ -474,8 +481,9 @@ Risale-i Nur içimizde küçük bir merak uyandırıyordu.`;
 Belki huzurdu.
 Belki sadece birlikte olmaktı.
 Ama o günler, dostluğumuzu derinleştirdi.</div>
-<button id="next2" style="display:none; margin-top:10px;">Devam</button>
-    </div>
+<div class="nextWrap">
+  <button id="next2" style="display:none;">Devam</button>
+</div>
   `;
 
   const a2 = document.getElementById("a2");
@@ -612,8 +620,9 @@ Nedir?</p>
       <div class="msg ok" id="m4ok">Tamam, hâlâ hatırlıyorsun 😄
 Fena değilsin.</div>
       <div class="msg bad" id="m4bad">Hmm… bir daha dene 😄</div>
-<button id="next4" style="display:none; margin-top:10px;">Devam</button>
-    </div>
+<div class="nextWrap">
+  <button id="next4" style="display:none;">Devam</button>
+</div>
   `;
 
   const a4 = document.getElementById("a4");
