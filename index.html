@@ -705,7 +705,8 @@ Gerçekten devam etmek istiyor musun?</p>
   hayir.onclick = () => showToast("Yanlış kapı 😌\nLütfen biraz daha çabala.");
 
   // Devam klick → nur nach 5 Fluchten weiter
-  btnRun.onclick = () => {
+
+   btnRun.onclick = () => {
     if(fleeCount < 5){
       showToast("Olmadı 😄 biraz daha…");
       flee();
@@ -714,6 +715,22 @@ Gerçekten devam etmek istiyor musun?</p>
     btnRun.remove();
     screen = "final";
     render();
+  };
+} // <-- Ende renderStep5()
+
+function renderFinal(){
+  removeRunaway();
+  app.innerHTML = `
+    <div class="qbox">
+      <p class="finalText">${escapeHtml(FINAL_MESSAGE)}</p>
+      <div class="signature">— Ayşenur</div>
+    </div>
+  `;
+}
+
+// Start!
+render();
+
 </script>
 </body>
 </html>
