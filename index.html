@@ -3,20 +3,16 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>✨</title>
   <style>
     :root{
-      --bg1:#fbf4e9;      /* Creme */
-      --bg2:#efe2cf;      /* Beige */
-      --card:#fffaf1;     /* sehr helles Creme */
-      --text:#2b2018;     /* dunkles Braun */
-      --muted:#6b5647;    /* warmes Taupe */
-      --accent:#b07a4a;   /* Karamell */
-      --accent2:#7a4e2f;  /* Schoko */
-      --good:#2f7d4a;
-      --bad:#b54747;
-      --warn:#b9832a;
+      --bg1:#fbf4e9;
+      --bg2:#efe2cf;
+      --text:#2b2018;
+      --muted:#6b5647;
+      --accent:#b07a4a;
+      --accent2:#7a4e2f;
     }
-
     *{box-sizing:border-box}
     body{
       margin:0;
@@ -32,21 +28,7 @@
       justify-content:center;
       padding:20px;
     }
-
     .wrap{width:min(980px, 100%);}
-
-.nextWrap{
-  display:flex;
-  justify-content:flex-end;
-  margin-top:18px;
-}
-
-.nextWrap button{
-  background: linear-gradient(135deg, var(--accent), var(--accent2));
-  color: white;
-  border: none;
-}
-
     .card{
       background: rgba(255,255,255,.75);
       border:1px solid rgba(122,78,47,.18);
@@ -62,7 +44,6 @@
       margin:0 0 10px;
       letter-spacing:.2px;
     }
-
     .subtle{
       color:var(--muted);
       font-size:14px;
@@ -70,7 +51,6 @@
       margin:0;
       white-space:pre-line;
     }
-
     .rulebox{
       border:1px solid rgba(122,78,47,.18);
       background: rgba(255,255,255,.55);
@@ -79,14 +59,12 @@
       margin-top:10px;
       white-space:pre-line;
     }
-
     .row{
       display:flex;
       gap:10px;
       flex-wrap:wrap;
       margin-top:14px;
     }
-
     button{
       appearance:none;
       border:1px solid rgba(122,78,47,.22);
@@ -97,14 +75,8 @@
       border-radius:14px;
       cursor:pointer;
     }
-
-    button:hover{
-      filter: brightness(1.02);
-    }
-
-    .ghost{
-      background: rgba(255,255,255,.55);
-    }
+    button:hover{filter: brightness(1.02);}
+    .ghost{background: rgba(255,255,255,.55);}
 
     .stepTop{
       display:flex;
@@ -113,14 +85,12 @@
       gap:12px;
       margin-bottom:8px;
     }
-
     .adim{
       font-weight:900;
       letter-spacing:.3px;
       font-size:18px;
       margin:0;
     }
-
     .progress{
       color:var(--muted);
       font-size:12px;
@@ -142,7 +112,6 @@
       font-size:13px;
       letter-spacing:.2px;
     }
-
     .question{
       margin:0;
       color:var(--muted);
@@ -150,7 +119,6 @@
       line-height:1.55;
       white-space:pre-line;
     }
-
     .inputRow{
       display:flex;
       gap:10px;
@@ -158,7 +126,6 @@
       margin-top:10px;
       align-items:center;
     }
-
     input[type="text"]{
       flex:1 1 260px;
       padding:11px 12px;
@@ -181,11 +148,21 @@
       background: rgba(255,255,255,.68);
       color:var(--text);
     }
-
     .msg.ok{border-color: rgba(47,125,74,.22);}
-.msg.bad{border-color: rgba(181,71,71,.22);}
+    .msg.bad{border-color: rgba(181,71,71,.22);}
 
-    /* Adım 3 layout: input left, cards right */
+    .nextWrap{
+      display:flex;
+      justify-content:flex-end;
+      margin-top:18px;
+    }
+    .nextWrap button{
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      color: white;
+      border: none;
+    }
+
+    /* Adım 3 */
     .shukrWrap{
       display:flex;
       gap:12px;
@@ -193,39 +170,23 @@
       flex-wrap:wrap;
       margin-top:10px;
     }
-    .shukrLeft{
-      flex: 1 1 320px;
-      min-width: 280px;
-    }
+    .shukrLeft{flex: 1 1 320px; min-width:280px;}
     .shukrRight{
-      flex: 1 1 320px;
-      min-width: 280px;
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-      justify-content:flex-start;
-      align-content:flex-start;
+      flex: 1 1 320px; min-width:280px;
+      display:flex; gap:10px; flex-wrap:wrap;
+      justify-content:flex-start; align-content:flex-start;
     }
     .miniCard{
-      width: min(240px, 100%);
+      width:min(240px, 100%);
       border:1px solid rgba(122,78,47,.18);
       background: rgba(255,255,255,.68);
       border-radius:16px;
       padding:12px;
     }
-    .miniCard .t{
-      margin:0;
-      font-weight:800;
-      font-size:14px;
-      line-height:1.4;
-    }
-    .miniCard .s{
-      margin:8px 0 0;
-      color:var(--muted);
-      font-size:12px;
-    }
+    .miniCard .t{margin:0; font-weight:800; font-size:14px; line-height:1.4;}
+    .miniCard .s{margin:8px 0 0; color:var(--muted); font-size:12px;}
 
-    /* Floating toast for Adım 5 Hayır click */
+    /* Toast */
     .toast{
       position:fixed;
       left:50%;
@@ -241,18 +202,19 @@
       font-size:14px;
       white-space:pre-line;
       display:none;
-      z-index:9999;
+      z-index:999999;
       max-width: min(520px, calc(100% - 40px));
     }
 
     /* Runaway button */
     .runaway{
       position:fixed;
-      z-index:9998;
+      z-index:999998;
       left:50%;
-      top:60%;
+      top:65%;
       transform: translate(-50%, -50%) scale(1);
       transform-origin:center;
+      pointer-events:auto;
     }
 
     .finalText{
@@ -262,7 +224,6 @@
       line-height:1.65;
       margin:0;
     }
-
     .signature{
       margin-top:10px;
       color:var(--muted);
@@ -275,14 +236,10 @@
   <div class="wrap">
     <div class="card" id="app"></div>
   </div>
-
   <div class="toast" id="toast"></div>
 
-  <script>
-    // =========================
-    // Personalize here
-    // =========================
-    const FINAL_MESSAGE = `Ayşe,
+<script>
+  const FINAL_MESSAGE = `Ayşe,
 
 iyi ki varsın.
 İyi ki hem kardeşim hem de dostumsun.
@@ -300,480 +257,423 @@ ve sana O’nun rızasını kazanabileceğin bir ömür versin.
 Seni seven kardeşin,
 Ayşenur
 
-
 Kalbin hep ferah olsun.`;
 
-    // =========================
-    // Helpers
-    // =========================
-    const app = document.getElementById("app");
-    const toast = document.getElementById("toast");
+  const app = document.getElementById("app");
+  const toast = document.getElementById("toast");
 
-    function showToast(text){
-      toast.textContent = text;
-      toast.style.display = "block";
-      clearTimeout(showToast._t);
-      showToast._t = setTimeout(() => toast.style.display = "none", 1600);
-    }
+  function showToast(text){
+    toast.textContent = text;
+    toast.style.display = "block";
+    clearTimeout(showToast._t);
+    showToast._t = setTimeout(() => toast.style.display = "none", 1600);
+  }
 
-    function norm(s){
-      return (s || "")
-        .trim()
-        .toLowerCase()
-        .replaceAll("ı","i")
-        .replaceAll("İ","i")
-        .replaceAll("â","a")
-        .replaceAll("ş","s")
-        .replaceAll("ğ","g")
-        .replaceAll("ü","u")
-        .replaceAll("ö","o")
-        .replaceAll("ç","c");
-    }
+  function norm(s){
+    return (s || "")
+      .trim()
+      .toLowerCase()
+      .replaceAll("ı","i")
+      .replaceAll("İ","i")
+      .replaceAll("â","a")
+      .replaceAll("ş","s")
+      .replaceAll("ğ","g")
+      .replaceAll("ü","u")
+      .replaceAll("ö","o")
+      .replaceAll("ç","c");
+  }
 
-    function escapeHtml(str){
-      return (str || "").replace(/[&<>"']/g, (m) => ({
-        "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
-      }[m]));
-    }
+  function escapeHtml(str){
+    return (str || "").replace(/[&<>"']/g, (m) => ({
+      "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+    }[m]));
+  }
 
-    // =========================
-    // State machine
-    // =========================
-    let screen = "rules"; // rules, step1, step2, step3, step4, step5, final
+  let screen = "rules";
+  let shukrEntries = [];
 
-    // Adım 3
-    let shukrEntries = [];
+  function render(){
+    if(screen === "rules") return renderRules();
+    if(screen === "step1") return renderStep1();
+    if(screen === "step2") return renderStep2();
+    if(screen === "step3") return renderStep3();
+    if(screen === "step4") return renderStep4();
+    if(screen === "step5") return renderStep5();
+    if(screen === "final") return renderFinal();
+  }
 
-    // Adım 5
-    let fleeCount = 0;
-    let devScale = 1;
+  function topBar(adim, progress){
+    return `
+      <div class="stepTop">
+        <div><p class="adim">${adim}</p></div>
+        <div class="progress">${progress}</div>
+      </div>
+    `;
+  }
 
-    // =========================
-    // Render functions
-    // =========================
-    function render(){
-      if(screen === "rules") return renderRules();
-      if(screen === "step1") return renderStep1();
-      if(screen === "step2") return renderStep2();
-      if(screen === "step3") return renderStep3();
-      if(screen === "step4") return renderStep4();
-      if(screen === "step5") return renderStep5();
-      if(screen === "final") return renderFinal();
-    }
+  function removeRunaway(){
+    const r = document.getElementById("runawayBtn");
+    if(r) r.remove();
+  }
 
-    function topBar(adim, progress){
-      return `
-        <div class="stepTop">
-          <div>
-            <p class="adim">${adim}</p>
-          </div>
-          <div class="progress">${progress}</div>
-        </div>
-      `;
-    }
-
-    // -------------------------
-    // Rules screen
-    // -------------------------
-    function renderRules(){
-      app.innerHTML = `
-        <h1 class="title">Kurallar / Regeln</h1>
-        <div class="rulebox subtle">Jede richtige Antwort öffnet das nächste Level. Du kannst Hint benutzen – aber dann meckere ich ein bisschen🤨
+  function renderRules(){
+    removeRunaway();
+    app.innerHTML = `
+      <h1 class="title">Kurallar / Regeln</h1>
+      <div class="rulebox subtle">Jede richtige Antwort öffnet das nächste Level. Du kannst Hint benutzen – aber dann meckere ich ein bisschen🤨
 
 Not: Alles ist liebevoll gemeint. Falls du bei etwas kurz hängen bleibst: nefes al, gül, devam et😊</div>
 
-        <div class="row">
-          <button id="ok1">Tamam</button>
-          <button id="ok2">Tamam</button>
-        </div>
-      `;
-      document.getElementById("ok1").onclick = () => { screen="step1"; render(); };
-      document.getElementById("ok2").onclick = () => { screen="step1"; render(); };
-    }
+      <div class="row">
+        <button id="ok1">Tamam</button>
+        <button id="ok2">Tamam</button>
+      </div>
+    `;
+    document.getElementById("ok1").onclick = () => { screen="step1"; render(); };
+    document.getElementById("ok2").onclick = () => { screen="step1"; render(); };
+  }
 
-    // -------------------------
-    // Step 1
-    // -------------------------
-    function renderStep1(){
-  const intro = `Aynı mahallede büyüdük.
+  function renderStep1(){
+    removeRunaway();
+    const intro = `Aynı mahallede büyüdük.
 Aynı sokaktan yürüdük.
 Farklı kapılardan girdik… ama sabahları aynı yola çıktık.
 Dostluk bazen aynı binada değil, aynı istikamette başlar.`;
 
-  app.innerHTML = `
-    ${topBar("Adım 1", "1/5")}
-    <p class="subtle">${intro}</p>
+    app.innerHTML = `
+      ${topBar("Adım 1", "1/5")}
+      <p class="subtle">${intro}</p>
 
-    <div class="qbox">
-      <p class="label">Soru / Frage</p>
-      <p class="question">Biz her sabah nereye birlikte yürürdük?</p>
+      <div class="qbox">
+        <p class="label">Soru / Frage</p>
+        <p class="question">Biz her sabah nereye birlikte yürürdük?</p>
 
-      <div class="inputRow">
-        <input id="a1" type="text" placeholder="Cevabını yaz..." autocomplete="off"/>
-        <button id="b1">Kontrol</button>
-        <button id="h1" class="ghost">Hint 💡</button>
+        <div class="inputRow">
+          <input id="a1" type="text" placeholder="Cevabını yaz..." autocomplete="off"/>
+          <button id="b1">Kontrol</button>
+          <button id="h1" class="ghost">Hint 💡</button>
+        </div>
+
+        <div class="msg" id="hint1">Mars’a değil 😌</div>
+        <div class="msg ok" id="m1ok">Ve yol, dostluğa dönüştü.</div>
+        <div class="msg bad" id="m1bad">Hmm… olmadı. Bir daha dene 😄</div>
+
+        <div class="nextWrap">
+          <button id="next1" style="display:none;">Devam</button>
+        </div>
       </div>
+    `;
 
-      <div class="msg" id="hint1">Mars’a değil 😌</div>
-      <div class="msg ok" id="m1ok">Ve yol, dostluğa dönüştü.</div>
-      <div class="msg bad" id="m1bad">Hmm… olmadı. Bir daha dene 😄</div>
-<div class="nextWrap">
-  <button id="next1" style="display:none;">Devam</button>
-</div>
-  `;
+    const a1 = document.getElementById("a1");
+    const ok = document.getElementById("m1ok");
+    const bad = document.getElementById("m1bad");
+    const hint = document.getElementById("hint1");
+    const next = document.getElementById("next1");
 
-  const a1 = document.getElementById("a1");
-  const b1 = document.getElementById("b1");
-  const h1 = document.getElementById("h1");
-  const hint1 = document.getElementById("hint1");
-  const ok = document.getElementById("m1ok");
-  const bad = document.getElementById("m1bad");
-const next1 = document.getElementById("next1");
+    const allowed = ["okula","lise","ortaokul","okullar","okul"].map(norm);
 
-  const allowed = ["okula","lise","ortaokul","okullar","okul"].map(norm);
-
-  function check(){
-    ok.style.display = "none";
-    bad.style.display = "none";
- next1.style.display = "none";
-    const v = norm(a1.value);
-    if(allowed.includes(v)){
-      ok.style.display = "block";
-      next1.style.display = "inline-block";
-    } else {
-      bad.style.display = "block";
+    function check(){
+      ok.style.display = "none";
+      bad.style.display = "none";
+      next.style.display = "none";
+      const v = norm(a1.value);
+      if(allowed.includes(v)){
+        ok.style.display = "block";
+        next.style.display = "inline-block";
+      } else {
+        bad.style.display = "block";
+      }
     }
+
+    document.getElementById("b1").onclick = check;
+    document.getElementById("h1").onclick = () => hint.style.display = "block";
+    a1.addEventListener("keydown", (e)=>{ if(e.key==="Enter") check(); });
+    next.onclick = () => { screen="step2"; render(); };
+    a1.focus();
   }
 
-  b1.onclick = check;
-  h1.onclick = () => hint1.style.display = "block";
-  a1.addEventListener("keydown", (e)=>{ if(e.key==="Enter") check(); });
-  a1.focus();
-next1.onclick = () => { screen="step2"; render(); };
-}
-
-    // -------------------------
-    // Step 2
-    // -------------------------
-    function renderStep2(){
-  const intro = `Tatillerde, hafta sonlarında bir araya gelir, aynı satırların başına otururduk.
+  function renderStep2(){
+    removeRunaway();
+    const intro = `Tatillerde, hafta sonlarında bir araya gelir, aynı satırların başına otururduk.
 Bazen ciddiydik, bazen gülerdik.
 Risale-i Nur içimizde küçük bir merak uyandırıyordu.`;
 
-  app.innerHTML = `
-    ${topBar("Adım 2", "2/5")}
-    <p class="subtle">${intro}</p>
+    app.innerHTML = `
+      ${topBar("Adım 2", "2/5")}
+      <p class="subtle">${intro}</p>
 
-    <div class="qbox">
-      <p class="label">Soru / Frage</p>
-      <p class="question">O yaşta bizi derslere çeken duygu neydi?</p>
+      <div class="qbox">
+        <p class="label">Soru / Frage</p>
+        <p class="question">O yaşta bizi derslere çeken duygu neydi?</p>
 
-      <div class="inputRow">
-        <input id="a2" type="text" placeholder="İçinden geleni yaz..." autocomplete="off"/>
-        <button id="b2">Kontrol</button>
-        <button id="h2" class="ghost">Hint 💡</button>
-      </div>
+        <div class="inputRow">
+          <input id="a2" type="text" placeholder="İçinden geleni yaz..." autocomplete="off"/>
+          <button id="b2">Kontrol</button>
+          <button id="h2" class="ghost">Hint 💡</button>
+        </div>
 
-      <div class="msg" id="hint2">Cevap Google’da yok 😌</div>
-      <div class="msg ok" id="m2ok">Belki meraktı.
+        <div class="msg" id="hint2">Cevap Google’da yok 😌</div>
+        <div class="msg ok" id="m2ok">Belki meraktı.
 Belki huzurdu.
 Belki sadece birlikte olmaktı.
 Ama o günler, dostluğumuzu derinleştirdi.</div>
-<div class="nextWrap">
-  <button id="next2" style="display:none;">Devam</button>
-</div>
-  `;
 
-  const a2 = document.getElementById("a2");
-  const b2 = document.getElementById("b2");
-  const h2 = document.getElementById("h2");
-  const hint2 = document.getElementById("hint2");
-  const ok = document.getElementById("m2ok");
-const next2 = document.getElementById("next2");
-next2.style.display = "none";
+        <div class="nextWrap">
+          <button id="next2" style="display:none;">Devam</button>
+        </div>
+      </div>
+    `;
 
-function go(){
-  ok.style.display = "block";
-  next2.style.display = "inline-block";
-}
+    const a2 = document.getElementById("a2");
+    const ok = document.getElementById("m2ok");
+    const hint = document.getElementById("hint2");
+    const next = document.getElementById("next2");
 
-  b2.onclick = go;
-  h2.onclick = () => hint2.style.display = "block";
-  a2.addEventListener("keydown", (e)=>{ if(e.key==="Enter") go(); });
-  a2.focus();
-next2.onclick = () => { screen="step3"; render(); };
-}
+    function go(){
+      ok.style.display = "block";
+      next.style.display = "inline-block";
+    }
 
-    // -------------------------
-    // Step 3 (Şükür x3)
-    // -------------------------
-    function renderStep3(){
-      const intro = `Hayat hep aynı çizgide ilerlemedi.
+    document.getElementById("b2").onclick = go;
+    document.getElementById("h2").onclick = () => hint.style.display = "block";
+    a2.addEventListener("keydown", (e)=>{ if(e.key==="Enter") go(); });
+    next.onclick = () => { screen="step3"; render(); };
+    a2.focus();
+  }
+
+  function renderStep3(){
+    removeRunaway();
+    const intro = `Hayat hep aynı çizgide ilerlemedi.
 Bazen dersten uzaklaştım.
 Ama sen hep yanımda kaldın.
 Dinledin, cesaret verdin, tekrar dönmem için elimi tuttun.
 Bunun için çok şükür.`;
 
-      app.innerHTML = `
-        ${topBar("Adım 3", "3/5")}
-        <p class="subtle">${intro}</p>
+    app.innerHTML = `
+      ${topBar("Adım 3", "3/5")}
+      <p class="subtle">${intro}</p>
 
-        <div class="qbox">
-          <p class="label">Mini görev</p>
-          <p class="question">Şimdi şükür ettiğin şeyleri yazalım.
+      <div class="qbox">
+        <p class="label">Mini görev</p>
+        <p class="question">Şimdi şükür ettiğin şeyleri yazalım.
 Aklına gelen ilk şeyi yaz — büyük/küçük fark etmez.</p>
 
-          <div class="shukrWrap">
-            <div class="shukrLeft">
-              <div class="inputRow">
-                <input id="a3" type="text" placeholder="Şükür ettiğin bir şeyi yaz..." autocomplete="off"/>
-                <button id="b3">Ekle</button>
-              </div>
-              <div class="msg ok" id="m3ok">Güzel 🤎 Devam et…</div>
+        <div class="shukrWrap">
+          <div class="shukrLeft">
+            <div class="inputRow">
+              <input id="a3" type="text" placeholder="Şükür ettiğin bir şeyi yaz..." autocomplete="off"/>
+              <button id="b3">Ekle</button>
             </div>
-
-            <div class="shukrRight" id="cards"></div>
+            <div class="msg ok" id="m3ok" style="display:none;"></div>
           </div>
-  <div class="nextWrap">
-        <button id="next3" style="display:none;">Devam</button>
-      </div>
+          <div class="shukrRight" id="cards"></div>
         </div>
-      `;
 
-      const a3 = document.getElementById("a3");
-      const b3 = document.getElementById("b3");
-      const m3 = document.getElementById("m3ok");
-      const cards = document.getElementById("cards");
-const next3 = document.getElementById("next3");
+        <div class="nextWrap">
+          <button id="next3" style="display:none;">Devam</button>
+        </div>
+      </div>
+    `;
 
-      function repaintCards(){
-        cards.innerHTML = shukrEntries.map((t, i) => `
-          <div class="miniCard">
-            <p class="t">${escapeHtml(t)}</p>
-            <p class="s">Elhamdülillah 🤎</p>
-          </div>
-        `).join("");
+    const a3 = document.getElementById("a3");
+    const m3 = document.getElementById("m3ok");
+    const cards = document.getElementById("cards");
+    const next = document.getElementById("next3");
+
+    function repaint(){
+      cards.innerHTML = shukrEntries.map(t => `
+        <div class="miniCard">
+          <p class="t">${escapeHtml(t)}</p>
+          <p class="s">Elhamdülillah 🤎</p>
+        </div>
+      `).join("");
+    }
+
+    function addEntry(){
+      const raw = (a3.value || "").trim();
+      if(!raw) return;
+      shukrEntries.push(raw);
+      a3.value = "";
+      repaint();
+
+      m3.style.display = "block";
+      if(shukrEntries.length === 1) m3.textContent = "Bir şükür daha…";
+      else if(shukrEntries.length === 2) m3.textContent = "Son bir tane daha…";
+      else {
+        m3.textContent = "Şükür paylaştıkça çoğalır.";
+        next.style.display = "inline-block";
       }
+    }
 
-      function addEntry(){
-        const raw = (a3.value || "").trim();
-        if(!raw) return; // ignore empty
-        shukrEntries.push(raw);
-        a3.value = "";
-        repaintCards();
+    document.getElementById("b3").onclick = addEntry;
+    a3.addEventListener("keydown", (e)=>{ if(e.key==="Enter") addEntry(); });
+    next.onclick = () => { screen="step4"; render(); };
 
-        m3.style.display = "block";
-        if(shukrEntries.length === 1){
-      m3.textContent = "Bir şükür daha…";
-    }
-    else if(shukrEntries.length === 2){
-      m3.textContent = "Son bir tane daha…";
-    }
-    else if(shukrEntries.length >= 3){
-      m3.textContent = "Şükür paylaştıkça çoğalır.";
-      next3.style.display = "inline-block";
-    }
+    repaint();
+    a3.focus();
   }
 
-      b3.onclick = addEntry;
-      a3.addEventListener("keydown", (e)=>{ if(e.key==="Enter") addEntry(); });
-
-next3.onclick = () => {
-    screen = "step4";
-    render();
-  };
-
-      repaintCards();
-      a3.focus();
-    }
-
-    // -------------------------
-    // Step 4 (İhlas riddle)
-    // -------------------------
-    function renderStep4(){
-  const intro = `Şimdi biraz zorlayacağım.
+  function renderStep4(){
+    removeRunaway();
+    const intro = `Şimdi biraz zorlayacağım.
 Zekânı da kullanman gerekecek 😌
 Bakalım o satırlar hâlâ aklında mı…`;
 
-  app.innerHTML = `
-    ${topBar("Adım 4", "4/5")}
-    <p class="subtle">${intro}</p>
+    app.innerHTML = `
+      ${topBar("Adım 4", "4/5")}
+      <p class="subtle">${intro}</p>
 
-    <div class="qbox">
-      <p class="label">Rätsel</p>
-      <p class="question">“Ben” küçülür,
+      <div class="qbox">
+        <p class="label">Rätsel</p>
+        <p class="question">“Ben” küçülür,
 “Biz” büyür.
 Gösterişi sevmez.
 Sessizdir ama güçlüdür.
 
 Nedir?</p>
 
-      <div class="inputRow">
-        <input id="a4" type="text" placeholder="Cevabın..." autocomplete="off"/>
-        <button id="b4">Kontrol</button>
-        <button id="h4" class="ghost">Hint 💡</button>
-      </div>
+        <div class="inputRow">
+          <input id="a4" type="text" placeholder="Cevabın..." autocomplete="off"/>
+          <button id="b4">Kontrol</button>
+          <button id="h4" class="ghost">Hint 💡</button>
+        </div>
 
-      <div class="msg" id="hint4">Ego değil.</div>
-      <div class="msg ok" id="m4ok">Tamam, hâlâ hatırlıyorsun 😄
+        <div class="msg" id="hint4">Ego değil.</div>
+        <div class="msg ok" id="m4ok">Tamam, hâlâ hatırlıyorsun 😄
 Fena değilsin.</div>
-      <div class="msg bad" id="m4bad">Hmm… bir daha dene 😄</div>
-<div class="nextWrap">
-  <button id="next4" style="display:none;">Devam</button>
-</div>
-  `;
+        <div class="msg bad" id="m4bad">Hmm… bir daha dene 😄</div>
 
-  const a4 = document.getElementById("a4");
-  const b4 = document.getElementById("b4");
-  const h4 = document.getElementById("h4");
-  const hint4 = document.getElementById("hint4");
-  const ok = document.getElementById("m4ok");
-  const bad = document.getElementById("m4bad");
+        <div class="nextWrap">
+          <button id="next4" style="display:none;">Devam</button>
+        </div>
+      </div>
+    `;
 
-  const answers = ["ihlas","ihlâs"].map(norm);
+    const a4 = document.getElementById("a4");
+    const ok = document.getElementById("m4ok");
+    const bad = document.getElementById("m4bad");
+    const hint = document.getElementById("hint4");
+    const next = document.getElementById("next4");
 
-  const next4 = document.getElementById("next4");
+    const answers = ["ihlas","ihlâs"].map(norm);
 
-function check(){
-  ok.style.display = "none";
-  bad.style.display = "none";
-  next4.style.display = "none";
+    function check(){
+      ok.style.display = "none";
+      bad.style.display = "none";
+      next.style.display = "none";
+      const v = norm(a4.value);
+      if(answers.includes(v)){
+        ok.style.display = "block";
+        next.style.display = "inline-block";
+      } else {
+        bad.style.display = "block";
+      }
+    }
 
-  const v = norm(a4.value);
-  if(answers.includes(v)){
-    ok.style.display = "block";
-    next4.style.display = "inline-block";
-  } else {
-    bad.style.display = "block";
+    document.getElementById("b4").onclick = check;
+    document.getElementById("h4").onclick = () => hint.style.display = "block";
+    a4.addEventListener("keydown", (e)=>{ if(e.key==="Enter") check(); });
+    next.onclick = () => { screen="step5"; render(); };
+    a4.focus();
   }
-}
 
-  b4.onclick = check;
-  h4.onclick = () => hint4.style.display = "block";
-  a4.addEventListener("keydown", (e)=>{ if(e.key==="Enter") check(); });
-  a4.focus();
-next4.onclick = () => { screen="step5"; render(); };
-}
-
-    // -------------------------
-    // Step 5 (runaway button)
-    // -------------------------
-    function renderStep5(){
-  const intro = `Son bir test daha var.
+  function renderStep5(){
+    app.innerHTML = `
+      ${topBar("Adım 5", "5/5")}
+      <p class="subtle">Son bir test daha var.
 Ama bu tamamen ciddiyetsiz 😌
 
-Gerçekten devam etmek istiyor musun?`;
+Gerçekten devam etmek istiyor musun?</p>
 
-  app.innerHTML = `
-    ${topBar("Adım 5", "5/5")}
-    <p class="subtle">${intro}</p>
-
-    <div class="qbox" id="step5box">
-      <p class="label">Seçim</p>
-      <p class="question">İpucu: “Devam” yakalanmayı pek sevmiyor 😄</p>
-
-      <div class="row" style="margin-top:10px;">
-        <button class="ghost" id="hayir5">❌ Hayır, yeter artık</button>
+      <div class="qbox">
+        <p class="label">Seçim</p>
+        <p class="question">İpucu: “Devam” yakalanmayı pek sevmiyor 😄</p>
+        <div class="row" style="margin-top:10px;">
+          <button class="ghost" id="hayir5">❌ Hayır, yeter artık</button>
+        </div>
+        <div class="msg" id="step5msg" style="display:none;"></div>
       </div>
+    `;
 
-      <div class="msg" id="step5msg" style="display:none;"></div>
-    </div>
-  `;
+    // Ensure only one runaway exists
+    removeRunaway();
 
-  const hayir = document.getElementById("hayir5");
-  const msg = document.getElementById("step5msg");
+    const hayir = document.getElementById("hayir5");
+    const msg = document.getElementById("step5msg");
 
-  // Remove any previous runaway button
-  const old = document.getElementById("runawayBtn");
-  if (old) old.remove();
+    const btnRun = document.createElement("button");
+    btnRun.id = "runawayBtn";
+    btnRun.className = "runaway";
+    btnRun.textContent = "✅ Devam edelim";
+    document.body.appendChild(btnRun);
 
-  // Create runaway button (fixed, over whole screen)
-  const btnRun = document.createElement("button");
-  btnRun.id = "runawayBtn";
-  btnRun.className = "runaway";
-  btnRun.textContent = "✅ Devam edelim";
-  btnRun.style.zIndex = "99999";
-  btnRun.style.position = "fixed";
-  btnRun.style.left = "50%";
-  btnRun.style.top = "65%";
-  btnRun.style.transform = "translate(-50%, -50%) scale(1)";
-  btnRun.style.pointerEvents = "auto";
-  document.body.appendChild(btnRun);
+    let fleeCount = 0;
+    let devScale = 1;
 
-  // State
-  let fleeCount = 0;
-  let devScale = 1;
+    function placeRandom(){
+      const pad = 16;
+      btnRun.style.transform = "translate(0,0) scale(1)";
+      const rect = btnRun.getBoundingClientRect();
+      const vw = window.innerWidth;
+      const vh = window.innerHeight;
 
-  function placeRandom(){
-    const pad = 16;
-    // Temporarily reset transform so width/height are measurable
-    btnRun.style.transform = "translate(0,0) scale(1)";
-    const rect = btnRun.getBoundingClientRect();
+      const maxX = Math.max(pad, vw - rect.width - pad);
+      const maxY = Math.max(pad, vh - rect.height - pad);
 
-    const vw = window.innerWidth;
-    const vh = window.innerHeight;
+      const x = Math.floor(pad + Math.random() * (maxX - pad));
+      const y = Math.floor(pad + Math.random() * (maxY - pad));
 
-    const maxX = Math.max(pad, vw - rect.width - pad);
-    const maxY = Math.max(pad, vh - rect.height - pad);
+      btnRun.style.left = x + "px";
+      btnRun.style.top = y + "px";
+      btnRun.style.transform = `translate(0,0) scale(${devScale})`;
+    }
 
-    const x = Math.floor(pad + Math.random() * (maxX - pad));
-    const y = Math.floor(pad + Math.random() * (maxY - pad));
+    function finish(){
+      hayir.style.display = "none";
+      btnRun.style.left = "50%";
+      btnRun.style.top = "65%";
+      btnRun.style.transform = `translate(-50%, -50%) scale(${Math.min(devScale, 2.0)})`;
+      msg.style.display = "block";
+      msg.textContent = "Tamam tamam… artık kaçmıyorum 😄";
+    }
 
-    btnRun.style.left = x + "px";
-    btnRun.style.top = y + "px";
-    btnRun.style.transform = `translate(0,0) scale(${devScale})`;
+    function flee(){
+      if(fleeCount >= 5) return;
+      fleeCount++;
+      devScale = Math.min(1.0 + fleeCount * 0.18, 2.1);
+      placeRandom();
+      if(fleeCount >= 5) finish();
+    }
+
+    btnRun.addEventListener("mouseenter", () => { if(fleeCount < 5) flee(); });
+    btnRun.addEventListener("touchstart", (e) => {
+      if(fleeCount < 5){ e.preventDefault(); flee(); }
+    }, {passive:false});
+
+    hayir.onclick = () => showToast("Yanlış kapı 😌\nLütfen biraz daha çabala.");
+
+    btnRun.onclick = () => {
+      if(fleeCount < 5){
+        showToast("Olmadı 😄 biraz daha…");
+        flee();
+        return;
+      }
+      removeRunaway();
+      screen = "final";
+      render();
+    };
   }
 
-  function finish(){
-    // Hide Hayır completely
-    hayir.style.display = "none";
-
-    // Park Devam in center and make it easy to click
-    btnRun.style.left = "50%";
-    btnRun.style.top = "65%";
-    btnRun.style.transform = `translate(-50%, -50%) scale(${Math.min(devScale, 2.0)})`;
-    msg.style.display = "block";
-    msg.textContent = "Tamam tamam… artık kaçmıyorum 😄";
+  function renderFinal(){
+    removeRunaway();
+    app.innerHTML = `
+      <div class="qbox">
+        <p class="finalText">${escapeHtml(FINAL_MESSAGE)}</p>
+         </div>
+    `;
   }
 
-  function flee(){
-    if (fleeCount >= 5) return;
-    fleeCount++;
-    devScale = Math.min(1.0 + fleeCount * 0.18, 2.1);
-    placeRandom();
-
-    if (fleeCount >= 5) {
-      finish();
-    }
-  }
-
-  // Run away on hover (desktop)
-  btnRun.addEventListener("mouseenter", () => {
-    if (fleeCount < 5) flee();
-  });
-
-  // Run away on touch (mobile)
-  btnRun.addEventListener("touchstart", (e) => {
-    if (fleeCount < 5) {
-      e.preventDefault();
-      flee();
-    }
-  }, { passive:false });
-
-  // Clicking Hayır shows message
-  hayir.onclick = () => {
-    showToast("Yanlış kapı 😌\nLütfen biraz daha çabala.");
-  };
-
-  // Clicking Devam: only works after 5
-  btnRun.onclick = () => {
-    if (fleeCount < 5) {
-      // tease + also flee once
-      showToast("Olmadı 😄 biraz daha…");
-      flee();
-      return;
-    }
-    // Clean up and render final directly
-   btnRun.remove();
-screen = "final";
-render();          // <-- wichtig: nicht renderFinal()
+  render();
+</script>
+</body>
+</html>
