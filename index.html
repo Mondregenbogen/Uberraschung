@@ -282,25 +282,23 @@
     // =========================
     // Personalize here
     // =========================
-    const FRIEND_NAME = "Ayşe";   // 
     const FINAL_MESSAGE = `Ayşe,
 
 iyi ki varsın.
 İyi ki hem kardeşim hem de dostumsun.
 
 Senin için dua ederken çoğu zaman Hz. Ali’nin duasıyla dua ediyorum:
-“Rabbim gönlünde olanı hakkında hayırlı eylesin, hakkında hayırlı olanı da gönlüne razı eylesin.”
+“Rabbim gönlünde olanı hakkında hayırlı eylesin, hakkında hayırlı olanı da gönlüne razı eylesin.”🤲🏻
 
-Senin için bütün güzellikleri, bütün mutlulukları isterdim.
-Ama biliyoruz ki bu dünya bir imtihan yeri.
-Rabbim burada imtihanını da güzel eylesin;
-ahirette ise yaptıklarının en güzel meyvelerini tatmayı nasip etsin.
+Senin için bütün güzellikleri, bütün mutlulukları isterdim, ama biliyoruz ki bu dünya bir imtihan yeri.
+Rabbim burada imtihanını da güzel eylesin,
+ahirette ise en güzel meyvelerini tatmayı nasip etsin.
 
 Hayatını hayırla doldursun,
 ve sana O’nun rızasını kazanabileceğin bir ömür versin.
 
 Seni seven kardeşin,
-Aysenur
+Ayşenur
 
 
 Kalbin hep ferah olsun.`;
@@ -522,7 +520,7 @@ Bunun için çok şükür.`;
 
         <div class="qbox">
           <p class="label">Mini görev</p>
-          <p class="question">Şimdi 3 defa şükür yazalım.
+          <p class="question">Şimdi şükür ettiğin şeyleri yazalım.
 Aklına gelen ilk şeyi yaz — büyük/küçük fark etmez.</p>
 
           <div class="shukrWrap">
@@ -661,7 +659,7 @@ next4.onclick = () => { screen="step5"; render(); };
     // Step 5 (runaway button)
     // -------------------------
     function renderStep5(){
-      const intro = `Son bir test daha var.
+      const intro = `Son birşey daha var.
 
 Gerçekten devam etmek istiyor musun?`;
 
@@ -770,16 +768,16 @@ Gerçekten devam etmek istiyor musun?`;
     function renderFinal(){
       // ensure runaway removed if still exists
       const r = document.getElementById("runawayBtn");
-      if(r) r.remove();
+  if(r) r.remove();
 
-      app.innerHTML = `
-        <h1 class="title">💌</h1>
-        <div class="qbox">
-          <p class="finalText">${escapeHtml(FINAL_MESSAGE)}</p>
-          <div class="signature">— ${escapeHtml(YOUR_NAME)}</div>
-        </div>
-      `;
-    }
+  app.innerHTML = `
+    <div class="qbox">
+      <p class="finalText">${escapeHtml(FINAL_MESSAGE)}</p>
+      <div class="signature">— ${escapeHtml(YOUR_NAME)}</div>
+      <div style="margin-top:14px; font-weight:800;">Kalbin hep ferah olsun.</div>
+    </div>
+  `;
+}
 
     // start
     render();
