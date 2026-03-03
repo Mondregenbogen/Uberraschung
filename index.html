@@ -579,140 +579,97 @@ Fena değilsin.</div>
   }
 
   function renderStep5(){
-  app.innerHTML = `
-    ${topBar("Adım 5", "5/5")}
-    <p class="subtle">Son bir şey daha var.
-
+    app.innerHTML = `
+      ${topBar("Adım 5", "5/5")}
+      <p class="subtle">Son bir şey daha var.
 Gerçekten devam etmek istiyor musun?</p>
 
-    <div class="qbox">
+      <div class="qbox">
       <div class="row" style="margin-top:10px;">
-        <button class="ghost" id="hayir5">❌ Hayır, yeter artık</button>
+      <button class="ghost" id="hayir5">❌ Hayır, yeter artık</button>
       </div>
       <div class="msg" id="step5msg" style="display:none;"></div>
-    </div>
-  `;
+      </div>
+    `;
 
-  // alte runaway buttons entfernen (wichtig)
-  const old = document.getElementById("runawayBtn");
-  if(old) old.remove();
+    // Ensure only one runaway exists
+    removeRunaway();
 
-  const hayir = document.getElementById("hayir5");
-  const msg = document.getElementById("step5msg");
+    const hayir = document.getElementById("hayir5");
+    const msg = document.getElementById("step5msg");
 
-  // Devam als fixed Button erstellen (funktioniert stabil)
-  const btnRun = document.createElement("button");
-  btnRun.id = "runawayBtn";
-  btnRun.className = "runaway";
-  btnRun.textContent = "✅ Devam edelim";
+    const btnRun = document.createElement("button");
+    btnRun.id = "runawayBtn";
+    btnRun.className = "runaway";
+    btnRun.textContent = "✅ Devam edelim";
+    document.body.appendChild(btnRun);
 
-  // Optik: wie normale Buttons (nicht “verdächtig”)
-  btnRun.style.background = "linear-gradient(135deg, rgba(176,122,74,.18), rgba(122,78,47,.10))";
-  btnRun.style.color = "var(--text)";
-  btnRun.style.border = "1px solid rgba(122,78,47,.22)";
+    let fleeCount = 0;
+    let devScale = 1;
 
-  document.body.appendChild(btnRun);
+    function placeRandom(){
+      const pad = 16;
+      btnRun.style.transform = "translate(0,0) scale(1)";
+      const rect = btnRun.getBoundingClientRect();
+      const vw = window.innerWidth;
+      const vh = window.innerHeight;
 
-  // State
-  let fleeCount = 0;
-  let devScale = 1;
+      const maxX = Math.max(pad, vw - rect.width - pad);
+      const maxY = Math.max(pad, vh - rect.height - pad);
 
-  // Damit er NICHT sofort beim Rendern wegläuft
-  let armed = false;
-  setTimeout(() => { armed = true; }, 250);
+      const x = Math.floor(pad + Math.random() * (maxX - pad));
+      const y = Math.floor(pad + Math.random() * (maxY - pad));
 
-  // Startposition: neben den Hayır-Button im Kasten setzen
-  function placeInitialNearHayir(){
-    const rHayir = hayir.getBoundingClientRect();
-
-    // Button erst messen
-    btnRun.style.transform = "translate(0,0) scale(1)";
-    const rBtn = btnRun.getBoundingClientRect();
-
-    let x = rHayir.right + 12; // rechts neben Hayır
-    let y = rHayir.top + (rHayir.height/2) - (rBtn.height/2);
-
-    // im viewport halten
-    const pad = 12;
-    x = Math.max(pad, Math.min(x, window.innerWidth - rBtn.width - pad));
-    y = Math.max(pad, Math.min(y, window.innerHeight - rBtn.height - pad));
-
-    btnRun.style.left = x + "px";
-    btnRun.style.top  = y + "px";
-    btnRun.style.transform = "translate(0,0) scale(1)";
-  }
-
-  // Zufällige Position
-  function placeRandom(){
-    const pad = 16;
-    btnRun.style.transform = "translate(0,0) scale(1)";
-    const rect = btnRun.getBoundingClientRect();
-
-    const vw = window.innerWidth;
-    const vh = window.innerHeight;
-
-    const maxX = Math.max(pad, vw - rect.width - pad);
-    const maxY = Math.max(pad, vh - rect.height - pad);
-
-    const x = Math.floor(pad + Math.random() * (maxX - pad));
-    const y = Math.floor(pad + Math.random() * (maxY - pad));
-
-    btnRun.style.left = x + "px";
-    btnRun.style.top = y + "px";
-    btnRun.style.transform = `translate(0,0) scale(${devScale})`;
-  }
-
-  function finish(){
-    hayir.style.display = "none";
-
-    btnRun.style.left = "50%";
-    btnRun.style.top  = "65%";
-    btnRun.style.transform = `translate(-50%, -50%) scale(${Math.min(devScale, 2.0)})`;
-
-    msg.style.display = "block";
-    msg.textContent = "Tamam tamam… artık kaçmıyorum 😄";
-  }
-
-  function flee(){
-    if(fleeCount >= 5) return;
-    fleeCount++;
-    devScale = Math.min(1.0 + fleeCount * 0.18, 2.1);
-    placeRandom();
-    if(fleeCount >= 5) finish();
-  }
-
-  // Startposition setzen (nachdem er im DOM ist)
-  placeInitialNearHayir();
-  window.addEventListener("resize", () => {
-    // bei resize nur neu positionieren, wenn noch nicht fertig
-    if(fleeCount < 5) placeInitialNearHayir();
-  });
-
-  // Hover/Tap: weglaufen
-  btnRun.addEventListener("mouseenter", () => {
-    if(!armed) return;
-    if(fleeCount < 5) flee();
-  });
-
-  btnRun.addEventListener("touchstart", (e) => {
-    if(fleeCount < 5){
-      e.preventDefault();
-      flee();
+      btnRun.style.left = x + "px";
+      btnRun.style.top = y + "px";
+      btnRun.style.transform = `translate(0,0) scale(${devScale})`;
     }
-  }, {passive:false});
 
-  // Hayır klick → Toast
-  hayir.onclick = () => showToast("Yanlış kapı 😌\nLütfen biraz daha çabala.");
-
-  // Devam klick → nur nach 5 Fluchten weiter
-  btnRun.onclick = () => {
-    if(fleeCount < 5){
-      showToast("Olmadı 😄 biraz daha…");
-      flee();
-      return;
+    function finish(){
+      hayir.style.display = "none";
+      btnRun.style.left = "50%";
+      btnRun.style.top = "65%";
+      btnRun.style.transform = `translate(-50%, -50%) scale(${Math.min(devScale, 2.0)})`;
+      msg.style.display = "block";
     }
-    btnRun.remove();
-    screen = "final";
-    render();
-  };
-}
+
+    function flee(){
+      if(fleeCount >= 5) return;
+      fleeCount++;
+      devScale = Math.min(1.0 + fleeCount * 0.18, 2.1);
+      placeRandom();
+      if(fleeCount >= 5) finish();
+    }
+
+    btnRun.addEventListener("mouseenter", () => { if(fleeCount < 5) flee(); });
+    btnRun.addEventListener("touchstart", (e) => {
+      if(fleeCount < 5){ e.preventDefault(); flee(); }
+    }, {passive:false});
+
+    hayir.onclick = () => showToast("Yanlış kapı 😌\nLütfen biraz daha çabala.");
+
+    btnRun.onclick = () => {
+      if(fleeCount < 5){
+        showToast("Olmadı 😄 biraz daha…");
+        flee();
+        return;
+      }
+      removeRunaway();
+      screen = "final";
+      render();
+    };
+  }
+
+  function renderFinal(){
+    removeRunaway();
+    app.innerHTML = `
+      <div class="qbox">
+        <p class="finalText">${escapeHtml(FINAL_MESSAGE)}</p>
+         </div>
+    `;
+  }
+
+  render();
+</script>
+</body>
+</html>
