@@ -774,8 +774,6 @@ Gerçekten devam etmek istiyor musun?`;
       return;
     }
     // Clean up and render final directly
-    btnRun.remove();
-    screen = "final"; // optional
-    renderFinal();
-  };
-}
+   btnRun.remove();
+screen = "final";
+render();          // <-- wichtig: nicht renderFinal()
