@@ -659,128 +659,123 @@ next4.onclick = () => { screen="step5"; render(); };
     // Step 5 (runaway button)
     // -------------------------
     function renderStep5(){
-      const intro = `Son birşey daha var.
+  const intro = `Son bir test daha var.
+Ama bu tamamen ciddiyetsiz 😌
 
 Gerçekten devam etmek istiyor musun?`;
 
-      app.innerHTML = `
-        ${topBar("Adım 5", "5/5")}
-        <p class="subtle">${intro}</p>
-
-        <div class="qbox">
-          <div class="row" style="margin-top:10px;">
-            <button class="ghost" id="hayir">❌ Hayır, yeter artık</button>
-            <button id="devamAnchor" style="display:none;"></button>
-          </div>
-        </div>
-      `;
-
-      // create runaway button as fixed element
-      let existing = document.getElementById("runawayBtn");
-      if(existing) existing.remove();
-
-      const btnRun = document.createElement("button");
-      btnRun.id = "runawayBtn";
-      btnRun.className = "runaway";
-      btnRun.textContent = "✅ Devam edelim";
-      document.body.appendChild(btnRun);
-
-      const hayir = document.getElementById("hayir");
-
-      // reset counters when entering step5
-      fleeCount = 0;
-      devScale = 1;
-
-      function placeRunawayRandom(){
-        const pad = 16;
-        const rect = btnRun.getBoundingClientRect();
-        const vw = window.innerWidth;
-        const vh = window.innerHeight;
-
-        const maxX = Math.max(pad, vw - rect.width - pad);
-        const maxY = Math.max(pad, vh - rect.height - pad);
-
-        const x = Math.floor(pad + Math.random() * (maxX - pad));
-        const y = Math.floor(pad + Math.random() * (maxY - pad));
-
-        btnRun.style.left = x + "px";
-        btnRun.style.top = y + "px";
-        btnRun.style.transform = `translate(0,0) scale(${devScale})`;
-      }
-
-      function flee(){
-        if(fleeCount >= 5) return;
-        fleeCount++;
-        devScale = Math.min(1.0 + fleeCount * 0.18, 2.1);
-        placeRunawayRandom();
-
-        if(fleeCount >= 5){
-          // After 5 rounds: remove Hayır, freeze Devam in center-ish and allow click to proceed
-          hayir.style.display = "none";
-          btnRun.style.left = "50%";
-          btnRun.style.top = "65%";
-          btnRun.style.transform = `translate(-50%, -50%) scale(${Math.min(devScale, 2.0)})`;
-          btnRun.style.cursor = "pointer";
-        }
-      }
-
-      // Run away on hover (pointerenter triggers once per entry)
-      btnRun.addEventListener("pointerenter", () => {
-        if(fleeCount < 5) flee();
-      });
-
-      // Mobile: also run on touchstart so it's still funny
-      btnRun.addEventListener("touchstart", (e) => {
-        if(fleeCount < 5){
-          e.preventDefault();
-          flee();
-        }
-      }, {passive:false});
-
-      // Clicking Hayır shows message (no navigation)
-      hayir.onclick = () => {
-        showToast("Yanlış kapı 😌\nLütfen biraz daha çabala.");
-      };
-
-      // Clicking Devam: only works AFTER 5 flees
-      btnRun.onclick = () => {
-        if(fleeCount < 5){
-          // optional tiny tease
-          showToast("Yakalayamadın 😄");
-          flee();
-          return;
-        }
-        // clean up runaway button then go final
-        btnRun.remove();
-        screen = "final";
-        renderFinal();
-};
-
-      // initial placement: center-ish
-      btnRun.style.left = "50%";
-      btnRun.style.top = "65%";
-      btnRun.style.transform = "translate(-50%, -50%) scale(1)";
-    }
-
-    // -------------------------
-    // Final
-    // -------------------------
-    function renderFinal(){
-      // ensure runaway removed if still exists
-      const r = document.getElementById("runawayBtn");
-  if(r) r.remove();
-
   app.innerHTML = `
-    <div class="qbox">
-      <p class="finalText">${escapeHtml(FINAL_MESSAGE)}</p>
-      <div class="signature">— ${escapeHtml(YOUR_NAME)}</div>
-      <div style="margin-top:14px; font-weight:800;">Kalbin hep ferah olsun.</div>
+    ${topBar("Adım 5", "5/5")}
+    <p class="subtle">${intro}</p>
+
+    <div class="qbox" id="step5box">
+      <p class="label">Seçim</p>
+      <p class="question">İpucu: “Devam” yakalanmayı pek sevmiyor 😄</p>
+
+      <div class="row" style="margin-top:10px;">
+        <button class="ghost" id="hayir5">❌ Hayır, yeter artık</button>
+      </div>
+
+      <div class="msg" id="step5msg" style="display:none;"></div>
     </div>
   `;
-}
 
-    // start
-    render();
-  </script>
-</body>
-</html>
+  const hayir = document.getElementById("hayir5");
+  const msg = document.getElementById("step5msg");
+
+  // Remove any previous runaway button
+  const old = document.getElementById("runawayBtn");
+  if (old) old.remove();
+
+  // Create runaway button (fixed, over whole screen)
+  const btnRun = document.createElement("button");
+  btnRun.id = "runawayBtn";
+  btnRun.className = "runaway";
+  btnRun.textContent = "✅ Devam edelim";
+  btnRun.style.zIndex = "99999";
+  btnRun.style.position = "fixed";
+  btnRun.style.left = "50%";
+  btnRun.style.top = "65%";
+  btnRun.style.transform = "translate(-50%, -50%) scale(1)";
+  btnRun.style.pointerEvents = "auto";
+  document.body.appendChild(btnRun);
+
+  // State
+  let fleeCount = 0;
+  let devScale = 1;
+
+  function placeRandom(){
+    const pad = 16;
+    // Temporarily reset transform so width/height are measurable
+    btnRun.style.transform = "translate(0,0) scale(1)";
+    const rect = btnRun.getBoundingClientRect();
+
+    const vw = window.innerWidth;
+    const vh = window.innerHeight;
+
+    const maxX = Math.max(pad, vw - rect.width - pad);
+    const maxY = Math.max(pad, vh - rect.height - pad);
+
+    const x = Math.floor(pad + Math.random() * (maxX - pad));
+    const y = Math.floor(pad + Math.random() * (maxY - pad));
+
+    btnRun.style.left = x + "px";
+    btnRun.style.top = y + "px";
+    btnRun.style.transform = `translate(0,0) scale(${devScale})`;
+  }
+
+  function finish(){
+    // Hide Hayır completely
+    hayir.style.display = "none";
+
+    // Park Devam in center and make it easy to click
+    btnRun.style.left = "50%";
+    btnRun.style.top = "65%";
+    btnRun.style.transform = `translate(-50%, -50%) scale(${Math.min(devScale, 2.0)})`;
+    msg.style.display = "block";
+    msg.textContent = "Tamam tamam… artık kaçmıyorum 😄";
+  }
+
+  function flee(){
+    if (fleeCount >= 5) return;
+    fleeCount++;
+    devScale = Math.min(1.0 + fleeCount * 0.18, 2.1);
+    placeRandom();
+
+    if (fleeCount >= 5) {
+      finish();
+    }
+  }
+
+  // Run away on hover (desktop)
+  btnRun.addEventListener("mouseenter", () => {
+    if (fleeCount < 5) flee();
+  });
+
+  // Run away on touch (mobile)
+  btnRun.addEventListener("touchstart", (e) => {
+    if (fleeCount < 5) {
+      e.preventDefault();
+      flee();
+    }
+  }, { passive:false });
+
+  // Clicking Hayır shows message
+  hayir.onclick = () => {
+    showToast("Yanlış kapı 😌\nLütfen biraz daha çabala.");
+  };
+
+  // Clicking Devam: only works after 5
+  btnRun.onclick = () => {
+    if (fleeCount < 5) {
+      // tease + also flee once
+      showToast("Olmadı 😄 biraz daha…");
+      flee();
+      return;
+    }
+    // Clean up and render final directly
+    btnRun.remove();
+    screen = "final"; // optional
+    renderFinal();
+  };
+}
