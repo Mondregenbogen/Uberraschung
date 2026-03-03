@@ -35,6 +35,12 @@
 
     .wrap{width:min(980px, 100%);}
 
+.nextWrap{
+  display:flex;
+  justify-content:flex-end;
+  margin-top:14px;
+}
+
     .card{
       background: rgba(255,255,255,.75);
       border:1px solid rgba(122,78,47,.18);
@@ -445,8 +451,7 @@ next1.onclick = () => { screen="step2"; render(); };
     // Step 2
     // -------------------------
     function renderStep2(){
-  const intro = `O zamanlar henüz çok küçüktük.
-Tatillerde, hafta sonlarında bir araya gelir, aynı satırların başına otururduk.
+  const intro = `Tatillerde, hafta sonlarında bir araya gelir, aynı satırların başına otururduk.
 Bazen ciddiydik, bazen gülerdik.
 Risale-i Nur içimizde küçük bir merak uyandırıyordu.`;
 
@@ -523,6 +528,9 @@ Aklına gelen ilk şeyi yaz — büyük/küçük fark etmez.</p>
 
             <div class="shukrRight" id="cards"></div>
           </div>
+  <div class="nextWrap">
+        <button id="next3" style="display:none;">Devam</button>
+      </div>
         </div>
       `;
 
@@ -530,6 +538,7 @@ Aklına gelen ilk şeyi yaz — büyük/küçük fark etmez.</p>
       const b3 = document.getElementById("b3");
       const m3 = document.getElementById("m3ok");
       const cards = document.getElementById("cards");
+const next3 = document.getElementById("next3");
 
       function repaintCards(){
         cards.innerHTML = shukrEntries.map((t, i) => `
@@ -548,17 +557,25 @@ Aklına gelen ilk şeyi yaz — büyük/küçük fark etmez.</p>
         repaintCards();
 
         m3.style.display = "block";
-        if(shukrEntries.length === 1) m3.textContent = "Bir şükür daha…";
-        if(shukrEntries.length === 2) m3.textContent = "Son bir tane daha…";
-        if(shukrEntries.length >= 3){
-          m3.textContent = "Şükür paylaştıkça çoğalır.";
-          // auto next
-          setTimeout(() => { screen="step4"; render(); }, 900);
-        }
-      }
+        if(shukrEntries.length === 1){
+      m3.textContent = "Bir şükür daha…";
+    }
+    else if(shukrEntries.length === 2){
+      m3.textContent = "Son bir tane daha…";
+    }
+    else if(shukrEntries.length >= 3){
+      m3.textContent = "Şükür paylaştıkça çoğalır.";
+      next3.style.display = "inline-block";
+    }
+  }
 
       b3.onclick = addEntry;
       a3.addEventListener("keydown", (e)=>{ if(e.key==="Enter") addEntry(); });
+
+next3.onclick = () => {
+    screen = "step4";
+    render();
+  };
 
       repaintCards();
       a3.focus();
@@ -636,7 +653,6 @@ next4.onclick = () => { screen="step5"; render(); };
     // -------------------------
     function renderStep5(){
       const intro = `Son bir test daha var.
-Ama bu tamamen ciddiyetsiz 😌
 
 Gerçekten devam etmek istiyor musun?`;
 
@@ -645,9 +661,6 @@ Gerçekten devam etmek istiyor musun?`;
         <p class="subtle">${intro}</p>
 
         <div class="qbox">
-          <p class="label">Seçim</p>
-          <p class="question">İpucu: “Devam” yakalanmayı pek sevmiyor 😄</p>
-
           <div class="row" style="margin-top:10px;">
             <button class="ghost" id="hayir">❌ Hayır, yeter artık</button>
             <button id="devamAnchor" style="display:none;"></button>
