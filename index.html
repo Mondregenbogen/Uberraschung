@@ -580,18 +580,15 @@ Fena değilsin.</div>
   function renderStep5(){
     app.innerHTML = `
       ${topBar("Adım 5", "5/5")}
-      <p class="subtle">Son bir test daha var.
-Ama bu tamamen ciddiyetsiz 😌
+      <p class="subtle">Son birşey daha var.
 
 Gerçekten devam etmek istiyor musun?</p>
 
       <div class="qbox">
-        <p class="label">Seçim</p>
-        <p class="question">İpucu: “Devam” yakalanmayı pek sevmiyor 😄</p>
-        <div class="row" style="margin-top:10px;">
-          <button class="ghost" id="hayir5">❌ Hayır, yeter artık</button>
-        </div>
-        <div class="msg" id="step5msg" style="display:none;"></div>
+      <div class="row" style="margin-top:10px;">
+      <button class="ghost" id="hayir5">❌ Hayır, yeter artık</button>
+      </div>
+      <div class="msg" id="step5msg" style="display:none;"></div>
       </div>
     `;
 
@@ -634,7 +631,6 @@ Gerçekten devam etmek istiyor musun?</p>
       btnRun.style.top = "65%";
       btnRun.style.transform = `translate(-50%, -50%) scale(${Math.min(devScale, 2.0)})`;
       msg.style.display = "block";
-      msg.textContent = "Tamam tamam… artık kaçmıyorum 😄";
     }
 
     function flee(){
