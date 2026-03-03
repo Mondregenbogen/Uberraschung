@@ -270,9 +270,7 @@
     // =========================
     // Personalize here
     // =========================
-    const FRIEND_NAME = "Ayşe";   // Optional: name shown in finale title (kannst du lassen)
-    const YOUR_NAME   = "Aysenur";
-
+    const FRIEND_NAME = "Ayşe";   // 
     const FINAL_MESSAGE = `Ayşe,
 
 iyi ki varsın.
@@ -409,6 +407,7 @@ Dostluk bazen aynı binada değil, aynı istikamette başlar.`;
       <div class="msg" id="hint1">Mars’a değil 😌</div>
       <div class="msg ok" id="m1ok">Ve yol, dostluğa dönüştü.</div>
       <div class="msg bad" id="m1bad">Hmm… olmadı. Bir daha dene 😄</div>
+<button id="next1" style="display:none; margin-top:10px;">Devam</button>
     </div>
   `;
 
@@ -418,16 +417,18 @@ Dostluk bazen aynı binada değil, aynı istikamette başlar.`;
   const hint1 = document.getElementById("hint1");
   const ok = document.getElementById("m1ok");
   const bad = document.getElementById("m1bad");
+const next1 = document.getElementById("next1");
 
   const allowed = ["okula","lise","ortaokul","okullar","okul"].map(norm);
 
   function check(){
     ok.style.display = "none";
     bad.style.display = "none";
+ next1.style.display = "none";
     const v = norm(a1.value);
     if(allowed.includes(v)){
       ok.style.display = "block";
-      setTimeout(() => { screen="step2"; render(); }, 850);
+      next1.style.display = "inline-block";
     } else {
       bad.style.display = "block";
     }
@@ -437,6 +438,7 @@ Dostluk bazen aynı binada değil, aynı istikamette başlar.`;
   h1.onclick = () => hint1.style.display = "block";
   a1.addEventListener("keydown", (e)=>{ if(e.key==="Enter") check(); });
   a1.focus();
+next1.onclick = () => { screen="step2"; render(); };
 }
 
     // -------------------------
@@ -467,6 +469,7 @@ Risale-i Nur içimizde küçük bir merak uyandırıyordu.`;
 Belki huzurdu.
 Belki sadece birlikte olmaktı.
 Ama o günler, dostluğumuzu derinleştirdi.</div>
+<button id="next2" style="display:none; margin-top:10px;">Devam</button>
     </div>
   `;
 
@@ -475,16 +478,19 @@ Ama o günler, dostluğumuzu derinleştirdi.</div>
   const h2 = document.getElementById("h2");
   const hint2 = document.getElementById("hint2");
   const ok = document.getElementById("m2ok");
+const next2 = document.getElementById("next2");
+next2.style.display = "none";
 
-  function go(){
-    ok.style.display = "block";
-    setTimeout(() => { screen="step3"; render(); }, 1100);
-  }
+function go(){
+  ok.style.display = "block";
+  next2.style.display = "inline-block";
+}
 
   b2.onclick = go;
   h2.onclick = () => hint2.style.display = "block";
   a2.addEventListener("keydown", (e)=>{ if(e.key==="Enter") go(); });
   a2.focus();
+next2.onclick = () => { screen="step3"; render(); };
 }
 
     // -------------------------
@@ -589,6 +595,7 @@ Nedir?</p>
       <div class="msg ok" id="m4ok">Tamam, hâlâ hatırlıyorsun 😄
 Fena değilsin.</div>
       <div class="msg bad" id="m4bad">Hmm… bir daha dene 😄</div>
+<button id="next4" style="display:none; margin-top:10px;">Devam</button>
     </div>
   `;
 
@@ -601,22 +608,27 @@ Fena değilsin.</div>
 
   const answers = ["ihlas","ihlâs"].map(norm);
 
-  function check(){
-    ok.style.display = "none";
-    bad.style.display = "none";
-    const v = norm(a4.value);
-    if(answers.includes(v)){
-      ok.style.display = "block";
-      setTimeout(() => { screen="step5"; render(); }, 950);
-    } else {
-      bad.style.display = "block";
-    }
+  const next4 = document.getElementById("next4");
+
+function check(){
+  ok.style.display = "none";
+  bad.style.display = "none";
+  next4.style.display = "none";
+
+  const v = norm(a4.value);
+  if(answers.includes(v)){
+    ok.style.display = "block";
+    next4.style.display = "inline-block";
+  } else {
+    bad.style.display = "block";
   }
+}
 
   b4.onclick = check;
   h4.onclick = () => hint4.style.display = "block";
   a4.addEventListener("keydown", (e)=>{ if(e.key==="Enter") check(); });
   a4.focus();
+next4.onclick = () => { screen="step5"; render(); };
 }
 
     // -------------------------
